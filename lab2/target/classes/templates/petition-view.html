@@ -1,0 +1,33 @@
+<h2 xmlns:th="http://www.w3.org/1999/xhtml"><a href="/petition" th:method="GET">Show all</a></h2>
+<div th:object="${petition}" xmlns:th="http://www.w3.org/1999/xhtml">
+        <h2>Petition</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Votes</th>
+                <th>Share</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${petition.name}"></td>
+                <td th:text="${petition.description}"></td>
+                <td th:text="${#lists.size(petition.votes)}"></td>
+                <td th:text="${link}"></td>
+                <td>
+                    <form th:action="@{/petition/vote/{id}(id=${petition.id})}" method="post" >
+                        <input type="submit" value="Vote">
+                    </form></td>
+                <td>
+                    <form th:action="@{/petition/delete/{id}(id=${petition.id})}" method="post" >
+                        <input type="submit" value="Delete">
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+</div>

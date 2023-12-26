@@ -1,0 +1,7 @@
+<form th:action="@{/petition}" th:object="${petition}" method="post" xmlns:th="http://www.w3.org/1999/xhtml">
+    <label for="name">Name</label>
+    <input type="text" th:field="*{name}" id="name" placeholder="Name">
+    <label for="description">Description</label>
+    <input type="text" th:field="*{description}" id="description" placeholder="Description">
+    <input type="submit" value="Create petition">
+</form>

@@ -1,0 +1,6 @@
+2023-12-02 17:35:31.831936+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" already exists; SQL statement:
+create table users ( id varchar(255) PRIMARY KEY ) [42101-224]
+2023-12-02 17:35:51.582631+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" already exists; SQL statement:
+create table users ( id varchar(255) PRIMARY KEY ) [42101-224]

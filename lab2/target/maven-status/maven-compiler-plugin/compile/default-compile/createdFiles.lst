@@ -1,0 +1,12 @@
+org/example/service/PetitionService.class
+org/example/config/DummyConfig.class
+org/example/Lab2Application.class
+org/example/service/VoteService.class
+org/example/repository/VoteRepository.class
+org/example/model/User.class
+org/example/model/Vote.class
+org/example/repository/PetitionRepository.class
+org/example/controller/PetitionController.class
+org/example/service/UserService.class
+org/example/model/Petition.class
+org/example/controller/HomeController.class

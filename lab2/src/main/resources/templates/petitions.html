@@ -1,0 +1,25 @@
+<h2><a href="/create">Create petition</a></h2>
+<div th:switch="${petitions}" xmlns:th="http://www.w3.org/1999/xhtml">
+    <h2 th:if="${#lists.isEmpty(petitions)}">No petition yet!</h2>
+    <div th:unless="${#lists.isEmpty(petitions)}">
+        <h2>Petitions</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Votes</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="petition : ${petitions}">
+                <td th:text="${petition.name}"></td>
+                <td th:text="${petition.description}"></td>
+                <td th:text="${#lists.size(petition.votes)}"></td>
+                <td><a th:href="@{/petition/{id}(id=${petition.id})}">View</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

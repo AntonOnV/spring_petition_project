@@ -1,0 +1,5 @@
+src/main/java/org/example/openapi/api/ApiUtil.java
+src/main/java/org/example/openapi/api/PetitionsApi.java
+src/main/java/org/example/openapi/model/Error.java
+src/main/java/org/example/openapi/model/PetitionRequest.java
+src/main/java/org/example/openapi/model/PetitionResponse.java

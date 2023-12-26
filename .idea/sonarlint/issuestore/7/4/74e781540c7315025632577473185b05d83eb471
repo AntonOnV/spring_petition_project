@@ -1,0 +1,7 @@
+
+[
+java:S2259'"EA "NullPointerException" could be thrown; "getKey()" can return null.(Ú°¥€
+X
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ
+Q
+java:S1874;"6Remove this use of "queryForObject"; it is deprecated.(‘š¥¥ÿÿÿÿÿ

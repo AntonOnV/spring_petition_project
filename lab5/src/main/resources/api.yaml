@@ -1,0 +1,253 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: API
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:8080/
+paths:
+  /petitions:
+    get:
+      summary: List all petition
+      operationId: listPetition
+      tags:
+        - Petition operations
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: next_page_marker
+          in: query
+          description: Number of the page
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: filter
+          in: query
+          description: |
+              Fields for filtering
+              Example: /petitions?filter=(eq, name, testName)&(cont, description, testDesc)
+              First parameter is filter type and can be: eq for equal or cont for contains.
+              Second parameter is petition field name. Valid values: name, description
+              Third parameter is value to compare
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A paged array of petition
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PetitionListResponse"
+        '400':
+          description: bad request error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '500':
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a petition
+      operationId: createPetition
+      tags:
+        - Petition operations
+      requestBody:
+        description: Name and description for the petition
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PetitionRequest"
+      responses:
+        '201':
+          description: A paged array of petition
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PetitionResponse"
+        '500':
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /petitions/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: The id of the petition to retrieve
+        schema:
+          type: integer
+          format: int32
+    get:
+      summary: Info for a specific petition
+      operationId: getPetitionById
+      tags:
+        - Petition operations
+      responses:
+        '200':
+          description: Petition
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PetitionResponse"
+        '404':
+          description: not found error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '500':
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      summary: Update petition by Id
+      operationId: updatePetitionById
+      tags:
+        - Petition operations
+      requestBody:
+          description: Name and description for the petition
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PetitionRequest"
+      responses:
+        '201':
+          description: Updated petition
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PetitionResponse"
+        '404':
+          description: not found error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '500':
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete petition By Id
+      operationId: deletePetitionById
+      tags:
+        - Petition operations
+      responses:
+        '204':
+          description: no content
+        '404':
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '500':
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /petitions/{id}/vote:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: The id of the petition to retrieve
+        schema:
+          type: integer
+          format: int32
+    post:
+      summary: Vote for the petition
+      operationId: addVote
+      tags:
+        - Petition operations
+      responses:
+        '202':
+          description: accepted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PetitionResponse"
+        '404':
+          description: not found error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '500':
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    PetitionResponse:
+      type: object
+      required:
+        - id
+        - name
+        - description
+        - votes
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        votes:
+          type: integer
+          format: int32
+    PetitionListResponse:
+      type: array
+      items:
+        $ref: "#/components/schemas/PetitionResponse"
+    PetitionRequest:
+      type: object
+      required:
+        - name
+        - description
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        tag:
+          type: string
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
